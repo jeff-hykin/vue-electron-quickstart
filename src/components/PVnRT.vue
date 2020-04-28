@@ -19,7 +19,7 @@
 
 <script>
 import Card from '@/components/Card'
-import allUtils from '../utils/allUtils'
+import allUtils from '../util/allUtils'
 export default {
     components: {
         Card,
@@ -34,13 +34,17 @@ export default {
     }),
     methods: {
         runCalc() {
+            this.P = allUtils.toNumber(this.P)
+            this.V = allUtils.convertToL(this.V)
+            this.n = allUtils.toNumber(this.n)
+            this.T = allUtils.convertToK(this.T)
+            
             this.status = allUtils.calcHandle(this, {
                 P: ()=>(this.P = (this.n * this.R * this.T)/this.V),
                 V: ()=>(this.V = (this.n * this.R * this.T)/this.P),
                 n: ()=>(this.n = (this.P * this.V)/(this.R * this.T)),
                 T: ()=>(this.T = (this.P * this.V)/(this.n * this.R)),
             })
-            console.log(`T is:`,this.T)
         },
         clearValues() {
             this.P = ""

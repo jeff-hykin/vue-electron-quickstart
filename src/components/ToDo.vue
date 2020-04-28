@@ -41,12 +41,12 @@ export default {
         text: "",
         tasks: [],
         reocurringTasks: [
-            // {
-            //     description: "Leave for Chem",
-            //     hide: true,
-            //     start: "8:50am",
-            //     days: [ "Monday", "Wednesday", "Friday" ],
-            // },
+            {
+                description: "Chem Exam",
+                hide: true,
+                start: "7:30pm",
+                days: [ "Monday", ],
+            },
             // {
             //     description: "Chem",
             //     start: "9:10am",

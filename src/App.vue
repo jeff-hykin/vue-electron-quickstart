@@ -16,6 +16,8 @@
                 <h1 v-if="minutesUntil">{{minutesUntil}}:</h1>
                 <h1>{{secondsUntil}}</h1>
             </row>
+            <input type="text" v-model="numberOfQsRemaining">
+            time per question {{ ((timeUntil/numberOfQsRemaining)/60).toFixed(2)}}min
         </column>
         <!-- Events -->
         <column class=event-container>
@@ -42,6 +44,7 @@
         </column>
     </row>
     <row >
+        <massFinder />
         <PVnRT />
     </row>
 </column>
@@ -85,8 +88,9 @@ import routes from './routes'
 import Card from '@/components/Card'
 import ToDo from '@/components/ToDo'
 import PVnRT from '@/components/PVnRT'
+import massFinder from '@/components/massFinder'
 
-import allUtils from "./utils/allUtils"
+import allUtils from "./util/allUtils"
 window.allUtils = allUtils
 let currentUnixTime = ()=>new Date().getTime()/1000
 let padZero = (amount)=> {
@@ -108,11 +112,13 @@ let App = {
         ToDo,
         PVnRT,
         Card,
+        massFinder,
     },
     data: ()=> ({
         timeUntil: null,
         calendarEventName: null,
         nextCalendarEventTime: null,
+        numberOfQsRemaining: 29,
         calendarEvent: {
             time: null,
             date: null,
@@ -212,6 +218,12 @@ export default App
 </script>
 
 <style lang='scss'>
+
+body input {
+    width: 6rem;
+    margin: 0.5rem;
+}
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;

@@ -31,9 +31,6 @@ const readdir = util.promisify(fs.readdir)
 let   dialog  = remote.dialog
 let   app     = remote.app
 
-// prevent scrollbars that shouldn't be there
-document.body.style.overflow = 'hidden'
-
 // 
 // Controls
 // 
