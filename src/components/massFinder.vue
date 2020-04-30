@@ -77,22 +77,36 @@ export default {
             this.moleculeData = await allUtils.getMoleculeData(value)
         },
         molarity(value) {
-            if (allUtils.exists(this.V)) {
+            // generate moles
+            if (allUtils.exists(this.V, this.molarity)) {
                 this.moles = this.V * this.molarity
+            // generate volume
+            } else if (allUtils.exists(this.molarity, this.moles)) {
+                this.V = this.moles / this.molarity
             }
         },
         moles(value) {
             if (this.moleculeData && this.moleculeData.weight) {
                 this.grams = this.moleculeData.weight * value
             }
+            // generate molarity
+            if (allUtils.exists(this.moles, this.V)) {
+                this.molarity = this.moles / this.volume
+            // generate volume
+            } else if (allUtils.exists(this.molarity, this.moles)) {
+                this.V = this.moles / this.molarity
+            }
         },
         grams(value) {
+            // unit convert
             value = allUtils.convertToG(value)
-            if (this.moleculeData && this.moleculeData.weight) {
-                this.moles = value / this.moleculeData.weight
-            }
             if (this.grams != value) {
                 this.grams = value
+                return
+            }
+            // generate moles (and therefore molarity if possible)
+            if (this.moleculeData && this.moleculeData.weight) {
+                this.moles = value / this.moleculeData.weight
             }
         },
         P(value) {
@@ -101,24 +115,30 @@ export default {
             }
         },
         V(value) {
+            // unit conversion
             value = allUtils.convertToL(value)
-            if (allUtils.exists(this.P, value, this.T)) {
-                this.moles = (this.P * value)/(this.R * this.T)
-            }
-            if (allUtils.exists(this.molarity)) {
-                this.moles = value * this.molarity
-            }
             if (this.V != value) {
                 this.V = value
+                return
+            }
+            // generate moles from PVnRT if avalible
+            if (allUtils.exists(this.P, value, this.T)) {
+                this.moles = (this.P * value)/(this.R * this.T)
+            // else try generate from molarity
+            } else if (allUtils.exists(this.molarity)) {
+                this.moles = value * this.molarity
             }
         },
         T(value) {
+            // unit convert
             value = allUtils.convertToK(value)
-            if (allUtils.exists(this.P, this.V, value)) {
-                this.moles = (this.P * this.V)/(this.R * value)
-            }
             if (this.T != value) {
                 this.T = value
+                return
+            }
+            
+            if (allUtils.exists(this.P, this.V, value)) {
+                this.moles = (this.P * this.V)/(this.R * value)
             }
         },
     },
