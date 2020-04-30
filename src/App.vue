@@ -1,5 +1,5 @@
 <template>
-<column>
+<column align-v=top>
     <row align-h=space-between align-v=top :wrap=true>
         <!-- spacing -->
         <!-- <column margin=2rem>
@@ -25,7 +25,7 @@
             <ToDo @taskChange='updateCalendarEvents' />
         </column>
     </row>
-    <row align-h=left max-width=100vw overflow=auto>
+    <row align-v=top align-h=left max-width=100vw overflow=auto>
         <column height=100% align-v=top width=50rem>
             <UnitConversions />
             <PVnRT />

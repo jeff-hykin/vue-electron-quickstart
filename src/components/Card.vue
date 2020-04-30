@@ -1,5 +1,5 @@
 <template>
-    <row class='card' color=gray>
+    <row class='card' color=gray :padding="$attrs.padding">
         <slot />
     </row>
 </template>

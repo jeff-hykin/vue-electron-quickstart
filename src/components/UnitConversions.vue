@@ -3,11 +3,12 @@
         <column >
             <pre>Unit Conversion</pre>
             <!-- input -->
-            <column >
-                <input @input="runCalc" type="text" placeholder="anything" v-model="input">
-            </column>
+            <ui-textbox 
+                @input="runCalc"
+                v-model="input"
+                />
             <!-- outputs -->
-            <row >
+            <row max-width=40rem overflow=auto>
                 <column v-bind:key="outputUnits.unit" v-for="outputUnits of outputs" padding=1rem >
                     <pre>{{outputUnits.value}}</pre>
                     <pre>{{outputUnits.unit}}</pre>

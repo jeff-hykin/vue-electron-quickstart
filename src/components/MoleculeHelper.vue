@@ -1,13 +1,13 @@
 <template>
     <column >
-        <Card>
-            <column height=10rem width=30rem align-v=top overflow=scroll>
-                <span>Heat Data</span>
+        <Card padding="1rem 0.2rem">
+            <column height=10rem width=20rem align-v=top overflow=scroll>
+                <span>Heat Data (kJ per mole) </span>
                 <div class=grid>
                     <pre></pre>
-                    <pre style=align-self:center>    H</pre>
-                    <pre style=align-self:center>    G</pre>
-                    <pre style=align-self:center>    S</pre>
+                    <pre style=align-self:center>    ΔH°</pre>
+                    <pre style=align-self:center>    ΔG°</pre>
+                    <pre style=align-self:center>    S°</pre>
                     <template v-for="(value, eachPossibleMolecule) in possibleHeatData" >
                         <pre v-bind:key="eachPossibleMolecule+1">{{eachPossibleMolecule}}: </pre>
                         <pre v-bind:key="eachPossibleMolecule+2" style=margin-left:1rem>{{value.H}}</pre>
@@ -18,70 +18,72 @@
             </column>
         </Card>
         <Card>
-            <column >
+            <column width=14rem >
                 <ui-button @click="clearValues">
                     Clear
                 </ui-button>
                 <column height=20px />
-                <row class='input-label' align-h=space-between >
-                    <p>molecule search</p>
-                    <ui-autocomplete
-                        label="Molecule Name"
-                        placeholder="Start Typing Molecule Name"
+                
+                
+                <!-- Search -->
+                <ui-autocomplete
+                    label="Molecule Name"
+                    placeholder="Enter Molecule Name"
 
-                        :suggestions="moleculeNames"
+                    :suggestions="moleculeNames"
 
-                        v-model="moleculeName"
+                    v-model="moleculeName"
+                />
+                
+                <!-- Formula -->
+                <ui-textbox
+                    label="Molecule Formula"
+                    type="text"
+                    v-model="molecule"
                     />
-                </row>
-                
-                <row class='input-label' align-h=space-between >
-                    <p>molecule</p>
-                    <input  type="text" v-model="molecule">
-                </row>
-                
-                
                 <column height=2rem />
                 
-                <row class='input-label' align-h=space-between >
-                    <p>moles</p>
-                    <input  type="text" v-model="moles">
-                </row>
-                
+                <!-- Moles -->
+                <ui-textbox
+                    label="moles"
+                    v-model="moles"
+                    />
                 <column height=2rem />
                 
-                <row class='input-label' align-h=space-between >
-                    <p>grams</p>
-                    <input  type="text" v-model="grams">
-                </row>
-                <row class='input-label' align-h=space-between >
-                    <p>molecules</p>
-                    <input  type="text" v-model="molecules">
-                </row>
-                
+                <!-- Grams -->
+                <ui-textbox
+                    label="grams"
+                    v-model="grams"
+                    />
+                <!-- Molecules -->
+                <ui-textbox
+                    label="molecules"
+                    v-model="molecules"
+                    />
                 <column height=2rem />
                 
-                <row class='input-label' align-h=space-between >
-                    <p>P (atm)</p>
-                    <input  type="text" v-model="P">
-                </row>
-                <row class='input-label' align-h=space-between >
-                    <p>V (liters)</p>
-                    <input  type="text" v-model="V">
-                </row>
-                <row class='input-label' align-h=space-between >
-                    <p>T (kelvin)</p>
-                    <input  type="text" v-model="T">
-                </row>
-                
+                <!-- P (atm) -->
+                <ui-textbox
+                    label="P (atm)"
+                    v-model="P"
+                    />
+                <!-- V (liters) -->
+                <ui-textbox
+                    label="V (liters)"
+                    v-model="V"
+                    />
+                <!-- T (kelvin) -->
+                <ui-textbox
+                    label="T (kelvin)"
+                    v-model="T"
+                    />
                 <column height=2rem />
                 
-                <row class='input-label' align-h=space-between >
-                    <p>Molarity</p>
-                    <input  type="text" v-model="molarity">
-                </row>
-                
-                
+                <!-- Molarity -->
+                <ui-textbox
+                    label="Molarity"
+                    v-model="molarity"
+                    />
                 <column height=2rem />
                 
                 <pre>{{moleculeDataFormatted}}</pre>
@@ -253,7 +255,7 @@ export default {
     width: 15rem;
 }
 .grid {
-    width: 25rem;
+    width: 95%;
     display: grid;
     grid-template-columns: auto auto auto auto;
 }
