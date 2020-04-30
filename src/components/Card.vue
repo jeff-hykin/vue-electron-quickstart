@@ -10,6 +10,7 @@
     padding: 2rem;
     border-radius: 1rem;
     margin: 1rem;
+    background: white;
 }
 .card h5 {
     margin-right: 1rem;

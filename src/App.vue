@@ -16,36 +16,26 @@
                 <h1 v-if="minutesUntil">{{minutesUntil}}:</h1>
                 <h1>{{secondsUntil}}</h1>
             </row>
-            <input type="text" v-model="numberOfQsRemaining">
+            <input type="number" v-model="numberOfQsRemaining">
             time per question {{ ((timeUntil/numberOfQsRemaining)/60).toFixed(2)}}min
         </column>
-        <!-- Events -->
+        <!-- ToDos -->
         <column class=event-container>
-            <!-- <column class=card>
-                <md-datepicker v-model="selectedDate" md-immediately />
-                <row class=card-row>
-                    <h5>Title</h5>
-                    <input type="text" v-model="calendarEvent.title">
-                </row>
-                <row class=card-row>
-                    <h5>Date</h5>
-                    <input type="date" v-model="calendarEvent.date">
-                </row>
-                <row class=card-row>
-                    <h5>Time</h5>
-                    <input type="time" v-model="calendarEvent.time">
-                </row>
-                <button @click="submitCalendarEvent">
-                    Submit
-                </button>
-            </column> -->
             <row height=2rem />
             <ToDo @taskChange='updateCalendarEvents' />
         </column>
     </row>
-    <row >
-        <MoleculeHelper />
-        <PVnRT />
+    <row align-h=left max-width=100vw overflow=auto>
+        <column height=100% align-v=top width=50rem>
+            <UnitConversions />
+            <PVnRT />
+        </column>
+        <row overflow=auto width=fill-avalible align-h=left align-v=top>
+            <MoleculeHelper />
+            <MoleculeHelper />
+            <MoleculeHelper />
+            <MoleculeHelper />
+        </row>
     </row>
 </column>
 </template>
@@ -88,6 +78,7 @@ import routes from './routes'
 import Card from '@/components/Card'
 import ToDo from '@/components/ToDo'
 import PVnRT from '@/components/PVnRT'
+import UnitConversions from '@/components/UnitConversions'
 import MoleculeHelper from '@/components/MoleculeHelper'
 
 import allUtils from "./util/allUtils"
@@ -113,6 +104,7 @@ let App = {
         PVnRT,
         Card,
         MoleculeHelper,
+        UnitConversions,
     },
     data: ()=> ({
         timeUntil: null,
@@ -219,9 +211,13 @@ export default App
 
 <style lang='scss'>
 
-body input {
-    width: 6rem;
-    margin: 0.5rem;
+body {
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(227,227,227,1) 100%);
+    
+    input {
+        width: 6rem;
+        margin: 0.5rem;
+    }
 }
 
 :root {

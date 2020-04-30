@@ -53,10 +53,10 @@ export default {
     }),
     methods: {
         runCalc() {
-            this.P = allUtils.toNumber(this.P)
-            this.V = allUtils.convertToL(this.V)
+            this.P = allUtils.convertTo(this.P, "atm")
+            this.V = allUtils.convertTo(this.V,"L")
             this.n = allUtils.toNumber(this.n)
-            this.T = allUtils.convertToK(this.T)
+            this.T = allUtils.convertTo(this.T,"K")
             
             // figure out which is missing and respond accordingly
             this.status = allUtils.calcHandle(this, {
