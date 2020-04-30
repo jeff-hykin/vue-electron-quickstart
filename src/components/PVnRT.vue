@@ -3,28 +3,28 @@
         <column >
             <pre>{{status}}</pre>
             <row >
-                <column >
-                    <input @input="runCalc" type="text" placeholder="P (atm)" v-model="P">
+                <column margin-left=0.2rem margin-right=0.2rem >
+                    <ui-textbox @input="runCalc" label="Pressure" v-model="P" />
                     <row >{{this.outputP}} </row>
                 </column>
-                <column >
-                    <input @input="runCalc" type="text" placeholder="V (liters)" v-model="V">
+                <column margin-left=0.2rem margin-right=0.2rem >
+                    <ui-textbox @input="runCalc" label="Volume" v-model="V" />
                     <row >{{this.outputV}} </row>
                 </column>
                 =
-                <column >
-                    <input @input="runCalc" type="text" placeholder="n (moles)" v-model="n">
+                <column margin-left=0.2rem margin-right=0.2rem >
+                    <ui-textbox @input="runCalc" label="Moles" v-model="n" />
                     <row >{{this.outputn}} </row>
                 </column>
                 R
-                <column >
-                    <input @input="runCalc" type="text" placeholder="T (kelvin)" v-model="T">
+                <column margin-left=0.2rem margin-right=0.2rem >
+                    <ui-textbox @input="runCalc" label="Temperature" v-model="T" />
                     <row >{{this.outputT}} </row>
                 </column>
             </row>
-            <button @click="clearValues">
+            <ui-button @click="clearValues">
                 Clear
-            </button>
+            </ui-button>
         </column>
     </Card>
 </template>
