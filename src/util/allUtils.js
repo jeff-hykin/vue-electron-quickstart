@@ -109,5 +109,7 @@ export default {
             // TODO
         }
     },
-    getMoleculeData
+    getMoleculeData,
+    R: 0.0821, // liter·atm/mol·K
+    Avagadro: 6.0221415 * (10 ** 23),
 }
