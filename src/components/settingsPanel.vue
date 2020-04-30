@@ -37,7 +37,7 @@ const readdir = util.promisify(fs.readdir)
 let   dialog  = remote.dialog
 let   app     = remote.app
 
-let localSettingsLocation = "videoLabelerSettings"
+let localSettingsLocation = "vueElectronSettings"
 
 export let settingsPanelComponent = {}
 export default {
