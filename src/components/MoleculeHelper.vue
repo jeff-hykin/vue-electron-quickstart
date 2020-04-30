@@ -68,7 +68,7 @@ export default {
         grams: "",
         V: "", // liters
         moles: "", // moles
-        R: 0.0821, // liter·atm/mol·K
+        R: allUtils.R, // liter·atm/mol·K
         T: "", // kelvin
         P: "", // kelvin
     }),
@@ -150,7 +150,6 @@ export default {
             this.grams = "" 
             this.V = ""  // liters
             this.moles = ""  // moles
-            this.R = 0.0821  // liter·atm/mol·K
             this.T = ""  // kelvin
             this.P = ""  // kelvin
         }

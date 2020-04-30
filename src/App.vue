@@ -44,7 +44,7 @@
         </column>
     </row>
     <row >
-        <massFinder />
+        <MoleculeHelper />
         <PVnRT />
     </row>
 </column>
@@ -88,7 +88,7 @@ import routes from './routes'
 import Card from '@/components/Card'
 import ToDo from '@/components/ToDo'
 import PVnRT from '@/components/PVnRT'
-import massFinder from '@/components/massFinder'
+import MoleculeHelper from '@/components/MoleculeHelper'
 
 import allUtils from "./util/allUtils"
 window.allUtils = allUtils
@@ -112,7 +112,7 @@ let App = {
         ToDo,
         PVnRT,
         Card,
-        massFinder,
+        MoleculeHelper,
     },
     data: ()=> ({
         timeUntil: null,
