@@ -238,12 +238,12 @@ export default {
         },
         moles(value) {
             // generate grams
-            if (this.moleculeData && this.moleculeData.weight) {
-                this.grams = this.moleculeData.weight * value
+            if (allUtils.exists(this.moles) && this.moleculeData && this.moleculeData.weight) {
+                this.grams = this.moleculeData.weight * this.moles
             }
             // generate molarity
             if (allUtils.exists(this.moles, this.V)) {
-                this.molarity = this.moles / this.volume
+                this.molarity = this.moles / this.V
             // generate volume
             } else if (allUtils.exists(this.molarity, this.moles)) {
                 this.V = this.moles / this.molarity
@@ -315,6 +315,9 @@ export default {
         clearValues() {
             this.moleculeData = null 
             this.molecule = "" 
+            this.moleculeName = ""
+            this.comparableMoles = ""
+            this.molecules = ""
             this.multiplier = "" 
             this.molarity = "" 
             this.grams = "" 
