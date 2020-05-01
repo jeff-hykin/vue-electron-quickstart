@@ -20,7 +20,7 @@
             </column>
         </Card>
         <Card>
-            <column width=14rem >
+            <column width=15rem >
                 <ui-button @click="clearValues">
                     Clear
                 </ui-button>
@@ -51,6 +51,14 @@
                 <ui-textbox
                     label="moles"
                     v-model="moles"
+                    />
+                <ui-textbox
+                    label="multiplier"
+                    v-model="multiplier"
+                    />
+                <ui-textbox
+                    label="comparable moles"
+                    v-model="comparableMoles"
                     />
                 <column height=2rem />
                 
@@ -107,7 +115,7 @@ const chemicalByName = new Fuse(allUtils.allChemicals, {
     threshold: 0.2,
     includeScore: true,
 })
-let moleculeNames = allUtils.allChemicals.map(each=>each.name.toLowerCase())
+let moleculeNames = allUtils.allChemicals.map(each=>each.name)
 
 export default {
     components: {
@@ -125,6 +133,8 @@ export default {
         molecules: "",
         V: "", // liters
         moles: "", // moles
+        multiplier: "", // moles
+        comparableMoles: "", // moles
         R: allUtils.R, // liter·atm/mol·K
         T: "", // kelvin
         P: "", // kelvin
@@ -148,6 +158,31 @@ export default {
                 results[each] = allUtils.heatData[each]
             }
             this.possibleHeatData = results
+            
+            // generate moles
+            if (allUtils.exists(this.grams) && this.moleculeData && this.moleculeData.weight) {
+                this.moles = this.grams / this.moleculeData.weight
+            }
+            // generate grams
+            if (allUtils.exists(this.moles) && this.moleculeData && this.moleculeData.weight) {
+                this.grams = this.moleculeData.weight * this.moles
+            }
+        },
+        comparableMoles() {
+            // generate moles
+            if (allUtils.exists(this.multiplier, this.comparableMoles)) {
+                this.moles = this.comparableMoles * this.multiplier
+            }
+        },
+        multiplier() {
+            // generate comparableMoles or moles
+            if (allUtils.exists(this.multiplier)) {
+                if (allUtils.exists(this.moles)) {
+                    this.comparableMoles = this.moles / this.multiplier
+                } else if (allUtils.exists(this.comparableMoles)) {
+                    this.moles = this.comparableMoles * this.multiplier
+                }
+            }
         },
         async moleculeName() {
             let result = allUtils.allChemicals.find(each=>each.name == this.moleculeName)
@@ -176,7 +211,18 @@ export default {
                 resultHash[each.item.name] = -score
             }
             for (let each of moleculeNames) {
-                resultHash[each] = resultHash[each] == null ? Infinity : resultHash[each]
+                if (each == this.moleculeName) {
+                    resultHash[each] = -Infinity
+                } else if (each.startsWith(this.moleculeName)) {
+                    let score = 0
+                    score+= 100
+                    // prefer shorter items
+                    score -= each.length
+                    // 
+                    resultHash[each] = -score
+                } else {
+                    resultHash[each] = resultHash[each] == null ? Infinity : resultHash[each]
+                }
             }
             moleculeNames.sort((a,b)=>resultHash[a]-resultHash[b])
             this.searchRank = resultHash
@@ -191,6 +237,7 @@ export default {
             }
         },
         moles(value) {
+            // generate grams
             if (this.moleculeData && this.moleculeData.weight) {
                 this.grams = this.moleculeData.weight * value
             }
@@ -204,6 +251,12 @@ export default {
             // generate atoms/molecule
             if (allUtils.exists(value)) {
                 this.molecules = this.moles * allUtils.Avagadro
+            }
+            
+            // geneate comparableMoles
+            if (allUtils.exists(this.multiplier, this.multiplier)) {
+                // generate comparable moles
+                this.comparableMoles = this.moles / this.multiplier
             }
         },
         grams(value) {
@@ -262,6 +315,7 @@ export default {
         clearValues() {
             this.moleculeData = null 
             this.molecule = "" 
+            this.multiplier = "" 
             this.molarity = "" 
             this.grams = "" 
             this.V = ""  // liters
