@@ -6,7 +6,7 @@ let heatData = require("./heatData.json")
 let allChemicals = require("./allChemicals.json")
 
 let getMoleculeData = async (stringChemical) => {
-    let rubyForm = stringChemical.replace(/(\d+|\))/g, "\*$1").replace(/(?<=[a-zA-Z0-9])([A-Z])/g,"+$1")
+    let rubyForm = stringChemical.replace(/(\d+)/g, "\*$1").replace(/(?<=[a-zA-Z0-9])([A-Z\(])/g,"+$1")
     console.log(`rubyForm of chemical formula is:`,rubyForm)
     const { stdout, stderr } = await execFile(`ruby`, [ `${path.normalize("./ruby-chem/get_data.rb")}`, rubyForm])
     return JSON.parse(stdout)
