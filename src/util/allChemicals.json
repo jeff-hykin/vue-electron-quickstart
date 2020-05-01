@@ -9526,5 +9526,441 @@
     {
         "name":"zirconium phosphate",
         "formula": "Zr3(PO4)4]"
+    },
+    {
+        "formula":"H2",
+        "name": "Hydrogen"
+    },
+    {
+        "formula":"He",
+        "name": "Helium"
+    },
+    {
+        "formula":"Li",
+        "name": "Lithium"
+    },
+    {
+        "formula":"Be",
+        "name": "Beryllium"
+    },
+    {
+        "formula":"B",
+        "name": "Boron"
+    },
+    {
+        "formula":"C",
+        "name": "Carbon"
+    },
+    {
+        "formula":"N2",
+        "name": "Nitrogen"
+    },
+    {
+        "formula":"O2",
+        "name": "Oxygen"
+    },
+    {
+        "formula":"F2",
+        "name": "Fluorine"
+    },
+    {
+        "formula":"Ne",
+        "name": "Neon"
+    },
+    {
+        "formula":"Na",
+        "name": "Sodium"
+    },
+    {
+        "formula":"Mg",
+        "name": "Magnesium"
+    },
+    {
+        "formula":"Al",
+        "name": "Aluminum"
+    },
+    {
+        "formula":"Si",
+        "name": "Silicon"
+    },
+    {
+        "formula":"P",
+        "name": "Phosphorus"
+    },
+    {
+        "formula":"S",
+        "name": "Sulfur"
+    },
+    {
+        "formula":"Cl2",
+        "name": "Chlorine"
+    },
+    {
+        "formula":"Ar",
+        "name": "Argon"
+    },
+    {
+        "formula":"K",
+        "name": "Potassium"
+    },
+    {
+        "formula":"Ca",
+        "name": "Calcium"
+    },
+    {
+        "formula":"Sc",
+        "name": "Scandium"
+    },
+    {
+        "formula":"Ti",
+        "name": "Titanium"
+    },
+    {
+        "formula":"V",
+        "name": "Vanadium"
+    },
+    {
+        "formula":"Cr",
+        "name": "Chromium"
+    },
+    {
+        "formula":"Mn",
+        "name": "Manganese"
+    },
+    {
+        "formula":"Fe",
+        "name": "Iron"
+    },
+    {
+        "formula":"Co",
+        "name": "Cobalt"
+    },
+    {
+        "formula":"Ni",
+        "name": "Nickel"
+    },
+    {
+        "formula":"Cu",
+        "name": "Copper"
+    },
+    {
+        "formula":"Zn",
+        "name": "Zinc"
+    },
+    {
+        "formula":"Ga",
+        "name": "Gallium"
+    },
+    {
+        "formula":"Ge",
+        "name": "Germanium"
+    },
+    {
+        "formula":"As",
+        "name": "Arsenic"
+    },
+    {
+        "formula":"Se",
+        "name": "Selenium"
+    },
+    {
+        "formula":"Br2",
+        "name": "Bromine"
+    },
+    {
+        "formula":"Kr",
+        "name": "Krypton"
+    },
+    {
+        "formula":"Rb",
+        "name": "Rubidium"
+    },
+    {
+        "formula":"Sr",
+        "name": "Strontium"
+    },
+    {
+        "formula":"Y",
+        "name": "Yttrium"
+    },
+    {
+        "formula":"Zr",
+        "name": "Zirconium"
+    },
+    {
+        "formula":"Nb",
+        "name": "Niobium"
+    },
+    {
+        "formula":"Mo",
+        "name": "Molybdenum"
+    },
+    {
+        "formula":"Tc",
+        "name": "Technetium"
+    },
+    {
+        "formula":"Ru",
+        "name": "Ruthenium"
+    },
+    {
+        "formula":"Rh",
+        "name": "Rhodium"
+    },
+    {
+        "formula":"Pd",
+        "name": "Palladium"
+    },
+    {
+        "formula":"Ag",
+        "name": "Silver"
+    },
+    {
+        "formula":"Cd",
+        "name": "Cadmium"
+    },
+    {
+        "formula":"In",
+        "name": "Indium"
+    },
+    {
+        "formula":"Sn",
+        "name": "Tin"
+    },
+    {
+        "formula":"Sb",
+        "name": "Antimony"
+    },
+    {
+        "formula":"Te",
+        "name": "Tellurium"
+    },
+    {
+        "formula":"I2",
+        "name": "Iodine"
+    },
+    {
+        "formula":"Xe",
+        "name": "Xenon"
+    },
+    {
+        "formula":"Cs",
+        "name": "Cesium"
+    },
+    {
+        "formula":"Ba",
+        "name": "Barium"
+    },
+    {
+        "formula":"La",
+        "name": "Lanthanum"
+    },
+    {
+        "formula":"Ce",
+        "name": "Cerium"
+    },
+    {
+        "formula":"Pr",
+        "name": "Praseodymium"
+    },
+    {
+        "formula":"Nd",
+        "name": "Neodymium"
+    },
+    {
+        "formula":"Pm",
+        "name": "Promethium"
+    },
+    {
+        "formula":"Sm",
+        "name": "Samarium"
+    },
+    {
+        "formula":"Eu",
+        "name": "Europium"
+    },
+    {
+        "formula":"Gd",
+        "name": "Gadolinium"
+    },
+    {
+        "formula":"Tb",
+        "name": "Terbium"
+    },
+    {
+        "formula":"Dy",
+        "name": "Dysprosium"
+    },
+    {
+        "formula":"Ho",
+        "name": "Holmium"
+    },
+    {
+        "formula":"Er",
+        "name": "Erbium"
+    },
+    {
+        "formula":"Tm",
+        "name": "Thulium"
+    },
+    {
+        "formula":"Yb",
+        "name": "Ytterbium"
+    },
+    {
+        "formula":"Lu",
+        "name": "Lutetium"
+    },
+    {
+        "formula":"Hf",
+        "name": "Hafnium"
+    },
+    {
+        "formula":"Ta",
+        "name": "Tantalum"
+    },
+    {
+        "formula":"W",
+        "name": "Tungsten"
+    },
+    {
+        "formula":"Re",
+        "name": "Rhenium"
+    },
+    {
+        "formula":"Os",
+        "name": "Osmium"
+    },
+    {
+        "formula":"Ir",
+        "name": "Iridium"
+    },
+    {
+        "formula":"Pt",
+        "name": "Platinum"
+    },
+    {
+        "formula":"Au",
+        "name": "Gold"
+    },
+    {
+        "formula":"Hg",
+        "name": "Mercury"
+    },
+    {
+        "formula":"Tl",
+        "name": "Thallium"
+    },
+    {
+        "formula":"Pb",
+        "name": "Lead"
+    },
+    {
+        "formula":"Bi",
+        "name": "Bismuth"
+    },
+    {
+        "formula":"Po",
+        "name": "Polonium"
+    },
+    {
+        "formula":"At",
+        "name": "Astatine"
+    },
+    {
+        "formula":"Rn",
+        "name": "Radon"
+    },
+    {
+        "formula":"Fr",
+        "name": "Francium"
+    },
+    {
+        "formula":"Ra",
+        "name": "Radium"
+    },
+    {
+        "formula":"Ac",
+        "name": "Actinium"
+    },
+    {
+        "formula":"Th",
+        "name": "Thorium"
+    },
+    {
+        "formula":"Pa",
+        "name": "Protactinium"
+    },
+    {
+        "formula":"U",
+        "name": "Uranium"
+    },
+    {
+        "formula":"Np",
+        "name": "Neptunium"
+    },
+    {
+        "formula":"Pu",
+        "name": "Plutonium"
+    },
+    {
+        "formula":"Am",
+        "name": "Americium"
+    },
+    {
+        "formula":"Cm",
+        "name": "Curium"
+    },
+    {
+        "formula":"Bk",
+        "name": "Berkelium"
+    },
+    {
+        "formula":"Cf",
+        "name": "Californium"
+    },
+    {
+        "formula":"Es",
+        "name": "Einsteinium"
+    },
+    {
+        "formula":"Fm",
+        "name": "Fermium"
+    },
+    {
+        "formula":"Md",
+        "name": "Mendelevium"
+    },
+    {
+        "formula":"No",
+        "name": "Nobelium"
+    },
+    {
+        "formula":"Lr",
+        "name": "Lawrencium"
+    },
+    {
+        "formula":"Rf",
+        "name": "Rutherfordium"
+    },
+    {
+        "formula":"Db",
+        "name": "Dubnium"
+    },
+    {
+        "formula":"Sg",
+        "name": "Seaborgium"
+    },
+    {
+        "formula":"Bh",
+        "name": "Bohrium"
+    },
+    {
+        "formula":"Hs",
+        "name": "Hassium"
+    },
+    {
+        "formula":"Mt",
+        "name": "Meitnerium"
     }
 ]
