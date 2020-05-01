@@ -1,7 +1,7 @@
 <template>
     <column >
         <Card padding="1rem 0.2rem">
-            <column height=10rem width=27rem align-v=top overflow=scroll>
+            <column height=10rem width=27rem align-v=top overflow=auto>
                 <span>Heat Data (kJ per mole) </span>
                 <div class=grid>
                     <pre></pre>
@@ -98,7 +98,9 @@
                     />
                 <column height=2rem />
                 
-                <pre>{{moleculeDataFormatted}}</pre>
+                <column max-width=95% align-h=left overflow=auto>
+                    <pre>{{moleculeDataFormatted}}</pre>
+                </column>
             </column>
         </Card>
     </column>
