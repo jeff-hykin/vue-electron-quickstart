@@ -1,18 +1,20 @@
 <template>
     <column >
         <Card padding="1rem 0.2rem">
-            <column height=10rem width=20rem align-v=top overflow=scroll>
+            <column height=10rem width=27rem align-v=top overflow=scroll>
                 <span>Heat Data (kJ per mole) </span>
                 <div class=grid>
                     <pre></pre>
                     <pre style=align-self:center>    ΔH°</pre>
                     <pre style=align-self:center>    ΔG°</pre>
                     <pre style=align-self:center>    S°</pre>
+                    <pre style=align-self:center>    Csp(J)</pre>
                     <template v-for="(value, eachPossibleMolecule) in possibleHeatData" >
-                        <pre v-bind:key="eachPossibleMolecule+1">{{eachPossibleMolecule}}: </pre>
+                        <pre v-bind:key="eachPossibleMolecule+1">{{eachPossibleMolecule.replace(/\s+/,"")}}</pre>
                         <pre v-bind:key="eachPossibleMolecule+2" style=margin-left:1rem>{{value.H}}</pre>
                         <pre v-bind:key="eachPossibleMolecule+3" style=margin-left:1rem>{{value.G}}</pre>
                         <pre v-bind:key="eachPossibleMolecule+4" style=margin-left:1rem>{{value.S}}</pre>
+                        <pre v-bind:key="eachPossibleMolecule+5" style=margin-left:1rem>{{value.Csp}}</pre>
                     </template>
                 </div>
             </column>
@@ -146,11 +148,6 @@ export default {
                 results[each] = allUtils.heatData[each]
             }
             this.possibleHeatData = results
-            
-            //
-            // get name
-            //
-            // chemicalByName.search("silver")
         },
         async moleculeName() {
             let result = allUtils.allChemicals.find(each=>each.name == this.moleculeName)
@@ -280,13 +277,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.input-label {
-    width: 15rem;
-}
 .grid {
     width: 95%;
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
 }
 
 </style>
