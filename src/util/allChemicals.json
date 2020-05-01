@@ -9528,10 +9528,6 @@
         "formula": "Zr3(PO4)4]"
     },
     {
-        "formula":"H2",
-        "name": "Hydrogen"
-    },
-    {
         "formula":"He",
         "name": "Helium"
     },
@@ -9550,18 +9546,6 @@
     {
         "formula":"C",
         "name": "Carbon"
-    },
-    {
-        "formula":"N2",
-        "name": "Nitrogen"
-    },
-    {
-        "formula":"O2",
-        "name": "Oxygen"
-    },
-    {
-        "formula":"F2",
-        "name": "Fluorine"
     },
     {
         "formula":"Ne",
@@ -9590,10 +9574,6 @@
     {
         "formula":"S",
         "name": "Sulfur"
-    },
-    {
-        "formula":"Cl2",
-        "name": "Chlorine"
     },
     {
         "formula":"Ar",
@@ -9664,10 +9644,6 @@
         "name": "Selenium"
     },
     {
-        "formula":"Br2",
-        "name": "Bromine"
-    },
-    {
         "formula":"Kr",
         "name": "Krypton"
     },
@@ -9734,10 +9710,6 @@
     {
         "formula":"Te",
         "name": "Tellurium"
-    },
-    {
-        "formula":"I2",
-        "name": "Iodine"
     },
     {
         "formula":"Xe",

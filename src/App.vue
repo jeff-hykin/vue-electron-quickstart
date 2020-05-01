@@ -268,4 +268,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.ui-autocomplete__suggestions {
+    max-height: 20rem;
+    overflow: auto;
+}
 </style>

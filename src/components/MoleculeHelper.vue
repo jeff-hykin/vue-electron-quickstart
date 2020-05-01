@@ -26,10 +26,12 @@
                 
                 
                 <!-- Search -->
+                <!-- positive favors b -->
                 <ui-autocomplete
                     label="Molecule Name"
                     placeholder="Enter Molecule Name"
-
+                    :limit=100
+                    :sort="sortNames"
                     :suggestions="moleculeNames"
 
                     v-model="moleculeName"
@@ -100,8 +102,10 @@ import Fuse from "fuse.js"
 
 const chemicalByName = new Fuse(allUtils.allChemicals, {
     keys: ["name"],
-    threshold: 0.1,
+    threshold: 0.2,
+    includeScore: true,
 })
+let moleculeNames = allUtils.allChemicals.map(each=>each.name.toLowerCase())
 
 export default {
     components: {
@@ -109,6 +113,8 @@ export default {
     },
     data: ()=>({
         status,
+        searchRank: {},
+        moleculeNames,
         moleculeData: null,
         molecule: "",
         moleculeName: "",
@@ -123,7 +129,6 @@ export default {
         possibleHeatData: [],
     }),
     mounted() {
-        console.log(`this.$attrs is:`,this.$attrs)
     },
     watch: {
         async molecule(value) {
@@ -154,6 +159,30 @@ export default {
             } else {
                 this.molecule = ""
             }
+            
+            // 
+            // update search rank
+            // 
+            let results = chemicalByName.search(this.moleculeName)
+            let resultHash = {}
+            for (let each of results) {
+                let score = 0
+                
+                if (each.item.name.startsWith(this.moleculeName)) {
+                    score+= 100
+                }
+                // prefer shorter items
+                score -= each.item.name.length
+                // prefer low-scoring fuzzyness
+                score -= each.score
+                
+                resultHash[each.item.name] = -score
+            }
+            for (let each of moleculeNames) {
+                resultHash[each] = resultHash[each] == null ? Infinity : resultHash[each]
+            }
+            moleculeNames.sort((a,b)=>resultHash[a]-resultHash[b])
+            this.searchRank = resultHash
         },
         molarity(value) {
             // generate moles
@@ -231,9 +260,6 @@ export default {
                 sortKeys: true
             })
         },
-        moleculeNames() {
-            return allUtils.allChemicals.map(each=>each.name)
-        }
     },
     methods: {
         clearValues() {
@@ -245,6 +271,9 @@ export default {
             this.moles = ""  // moles
             this.T = ""  // kelvin
             this.P = ""  // kelvin
+        },
+        sortNames(a,b) {
+            return this.searchRank[a]-this.searchRank[b]
         }
     },
 }
@@ -259,4 +288,5 @@ export default {
     display: grid;
     grid-template-columns: auto auto auto auto;
 }
+
 </style>
