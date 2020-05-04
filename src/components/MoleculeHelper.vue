@@ -286,11 +286,14 @@ export default {
                 return
             }
             // generate moles from PVnRT if avalible
-            if (allUtils.exists(this.P, value, this.T)) {
-                this.moles = (this.P * value)/(this.R * this.T)
-            // else try generate from molarity
-            } else if (allUtils.exists(this.molarity)) {
-                this.moles = value * this.molarity
+            if (allUtils.exists(this.P, this.V, this.T)) {
+                this.moles = (this.P * this.V)/(this.R * this.T)
+            // generate moles
+            } else if (allUtils.exists(this.molarity, this.V)) {
+                this.moles = this.V * this.molarity
+            //  generate molarity
+            } else if (allUtils.exists(this.moles, this.V)) {
+                this.molarity = this.moles / this.V
             }
         },
         T(value) {
