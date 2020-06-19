@@ -60,6 +60,16 @@ export default {
         window.main = this 
         // connect the settings panel
         this.settings = settingsPanelComponent.settings
+        
+        // setup tensorflow
+        let tf = require('@tensorflow/tfjs-core')
+        require('@tensorflow/tfjs-layers')
+        require('@tensorflow/tfjs-backend-webgl')
+        console.log(`tf`, tf)
+        window.tf = tf
+        let a = tf.tensor([[1,2],[3,4]])
+        let b = a.matMul(tf.tensor([[1,0],[0,1]]))
+        console.log(`b is:`,b)
     },
     computed: {
     },

@@ -53,6 +53,9 @@
         }
     },
     "dependencies": {
+        "@tensorflow/tfjs-backend-webgl": "^2.0.1",
+        "@tensorflow/tfjs-core": "^2.0.1",
+        "@tensorflow/tfjs-layers": "^2.0.1",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
         "@vue/babel-preset-jsx": "^1.1.2",
         "apexcharts": "^3.11.0",
