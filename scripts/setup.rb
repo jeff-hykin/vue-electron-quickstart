@@ -1,17 +1,19 @@
 require 'atk_toolbox'
 
-puts "I'll try to install most of these things for you"
-puts "to test you'll need:"
-puts "    nodejs ≥ v13.7.0"
-puts "    npm ≥ 6.13.6"
-puts ""
-puts "to export into an app/program file you'll need:"
-puts "    python2 (needed by electron builder)"
-puts "    you'll also need python2 mapped to the 'python' command when building"
-puts ""
-puts "    if you have asdf installed"
-puts "    and have installed a version of python2 with asdf"
-puts "    then there's no need to change the global version of python to python2"
+puts <<-HEREDOC
+
+I'll try to install most of these things for you
+but be aware your computer will likely have unique errors/challenges
+
+to test you'll need: 
+    nodejs ≥ v13.7.0 (exact version is better than a newer version)
+    npm ≥ 6.13.6 (exact version is better than a newer version)
+ 
+you'll need emscriptem for WASM
+    get asdf, a version manager of many things
+    this project uses multpile versions of python at different times
+
+HEREDOC
 
 
 puts "\nattempting to install node and npm"
@@ -25,4 +27,22 @@ if not Console.has_command("npm")
     end
 end
 
+puts "\n\nattempting to install node modules with `npm install`"
 system "npm install"
+
+puts "\n\ninstalling python versions"
+system "asdf install python 3.8.2"
+system "asdf install python 2.7.14"
+
+puts "\n\nattempting to setup emscriptem"
+puts "original instructions here: https://emscripten.org/docs/getting_started/downloads.html"
+system "cd emsdk && git pull"
+if OS.is?("unix")
+    system "asdf local python 3.8.2"
+    system "./emsdk install latest"
+    system "./emsdk activate latest"
+    system "source ./emsdk_env.sh"
+    puts "console likely needs to be restarted"
+else
+    puts "unable to setup for your OS"
+end
