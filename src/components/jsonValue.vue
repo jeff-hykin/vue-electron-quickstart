@@ -23,13 +23,13 @@
                     >
             </template>
             <template v-if="type == 'String'">
-                <input type="text" v-bind="stringValue" placeholder="enter text">
+                <input type="text" v-model="stringValue" placeholder="enter text">
             </template>
             <template v-if="type == 'List'">
                 <div>FIXME</div>
             </template>
             <template v-if="type == 'Object'">
-                <div>FIXME</div>
+                <jsonObject @valueChange="valueChange" />
             </template>
         </div>
     </div>
@@ -44,6 +44,10 @@ const typeOptions = [
     "Object",
 ]
 export default {
+    name: "jsonValue",
+    components: {
+        jsonObject: () => import('./jsonObject.vue')
+    },
     data: ()=>({
         currentTypeIndex: 0,
         numberValue: 0,
@@ -59,17 +63,15 @@ export default {
             } else if (this.currentTypeIndex == -1) {
                 this.currentTypeIndex = typeOptions.length - 1
             }
+            // in just a moment tell the parent the value just changed
+            setTimeout(() => this.$listeners.valueChange(this.value), 0)
             return typeOptions[this.currentTypeIndex]
         },
         value() {
-            // in just a moment tell the parent the value just changed
-            setTimeout(() => {
-                $listeners.valueChange(this.value)
-            }, 0)
             // actually change the value
             switch (this.type) {
                 case "Null"    : return null
-                case "Number"  : return this.numberValue
+                case "Number"  : return this.numberValue-0
                 case "String"  : return this.stringValue
                 case "List"    : return this.listValue
                 case "Object"  : return this.objectValue
@@ -77,6 +79,14 @@ export default {
         },
     },
     watch: {
+        numberValue(newValue) {
+            // in just a moment tell the parent the value just changed
+            setTimeout(() => this.$listeners.valueChange(this.value), 0)
+        },
+        stringValue(newValue) {
+            // in just a moment tell the parent the value just changed
+            setTimeout(() => this.$listeners.valueChange(this.value), 0)
+        },
     },
     methods: {
         validateNumber($event) {
@@ -100,6 +110,10 @@ export default {
             console.log(`$event is:`,$event)
             $event.target.select()
         },
+        valueChange(newValue) {
+            // in just a moment tell the parent the value just changed
+            this.$listeners.valueChange(newValue)
+        },
         nextType() {
             this.currentTypeIndex++;
         },
@@ -118,7 +132,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0.7rem 0.5rem;
+    padding: 0.2rem 0.3rem 0.5rem;
     box-shadow: inset 2px 3px 8px #55555573; // sunken-down effect
     border-radius: 1rem;
     background: #3130304a;
@@ -126,12 +140,11 @@ export default {
 
     & > [unique-fni18943-type-picker] {
         margin: 0 0.1rem;
-        padding: 0.2rem 0.5rem;
+        padding: 0 0.5rem;
         display: flex;
         flex-direction: row;
         align-items: center;
         color: gray;
-
         
         & > span {
             min-width: 5.7rem; // width of the largest option (e.g. "Number")
@@ -151,7 +164,7 @@ export default {
     }
     
     & > [unique-fni18943-value] {
-        min-height: 2.02rem;
+        min-height: 2.12rem;
         display: flex;
         align-items: center;
         align-self: center;
