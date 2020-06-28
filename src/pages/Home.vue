@@ -14,6 +14,7 @@
         <div class=panel-ghost ></div>
         <!-- Main Section -->
         <div class=main-area>
+            <jsonObject />
         </div>
     </row>
 </template>
@@ -24,6 +25,7 @@ import path from 'path'
 
 // components/mixins
 import settingsPanel, {settingsPanelComponent} from "@/components/settingsPanel"
+import jsonObject from "@/components/jsonObject"
 
 
 let   util    = require("util")
@@ -50,6 +52,7 @@ export default {
     name: "main-page",
     components: {
         settingsPanel,
+        jsonObject,
     },
     data: ()=>({
         settings: {},
