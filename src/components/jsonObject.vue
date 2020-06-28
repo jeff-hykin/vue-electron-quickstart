@@ -1,8 +1,8 @@
 <template>
-    <div json-object-fh3935 object-fh3935 class="json-editor-object" :style="{...$attrs.style}" v-on="$listeners">
+    <div json-object-fh3935 object-fh3935 :style="{...$attrs.style}" v-on="$listeners">
         <!-- TODO: stop using the this.valueKeys (optimize it out) -->
-        <template v-for="(value, key) in this.masterValue">
-            <jsonKeyValue :pair="value" v-bind:key="key" :value="value" @changeValue="updateKeyValue" @delete="deleteKey" :root=value />
+        <template v-for="(each, index) in this.masterValue">
+            <jsonKeyValue :initKey="each.key" :initValue="each.value" v-bind:key="index"  @changeValue="updateKeyValue" @delete="deleteKey" />
         </template>
         <button @click="addKeyValue">
             Add
@@ -10,20 +10,27 @@
     </div>
 </template>
 <script>
-import jsonKeyValue from "./jsonKeyValue"
-import jsonValue from "./jsonValue"
 
 let count = 0
 let counter = ()=>++count // FIXME: this is only for debugging
 
 export default {
     name: "jsonObject",
-    components: {jsonValue, jsonKeyValue},
+    components: {
+        jsonKeyValue: () => import('./jsonKeyValue.vue'),
+    },
+    props: {
+    },
     data: ()=>({
         masterValue: [],
         count: counter()
     }),
-    props: {
+    mounted() {
+        console.log(`OBJECT ${count}: mounted`)
+        // init the masterValue
+        for (const key in this.$attrs.initValue) {
+            this.masterValue.push({key, value: this.$attrs.initValue[key]})
+        }  
     },
     computed: {
         value() {
@@ -56,9 +63,6 @@ export default {
             // TODO: focus on the name of the newly created element
         },
         updateKeyValue(oldKey, key, value) {
-            console.log(`OBJECT ${this.count}: updateKeyValue`)
-            console.log(`    value:`, JSON.stringify(this.value))
-            console.log(`    root:`,this.$attrs.root)
             for (const eachIndex in this.masterValue) {
                 let eachPair = this.masterValue[eachIndex]
                 // TODO: raise an error when two pairs have the same key
@@ -66,6 +70,8 @@ export default {
                     this.$set(this.masterValue, eachIndex, { key: key, value: value })
                 }
             }
+            console.log(`OBJECT ${this.count}: updateKeyValue`)
+            console.log(`    value:`, JSON.stringify(this.value))
         },
         deleteKey(key) {
             for (const eachIndex in this.masterValue) {
