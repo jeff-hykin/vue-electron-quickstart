@@ -1,8 +1,8 @@
 <template>
-    <div unique-fh3935 class="json-editor-object" :style="{...$attrs.style}" v-on="$listeners">
-        <!-- <jsonValue /> -->
-        <template v-for="(each, index) in this.valueKeys">
-            <jsonKeyValue :key=each @changeValue="updateKeyValue" @delete="deleteKey" :root=value v-bind:key="each" />
+    <div json-object-fh3935 object-fh3935 class="json-editor-object" :style="{...$attrs.style}" v-on="$listeners">
+        <!-- TODO: stop using the this.valueKeys (optimize it out) -->
+        <template v-for="(value, key) in this.masterValue">
+            <jsonKeyValue :pair="value" v-bind:key="key" :value="value" @changeValue="updateKeyValue" @delete="deleteKey" :root=value />
         </template>
         <button @click="addKeyValue">
             Add
@@ -14,69 +14,72 @@ import jsonKeyValue from "./jsonKeyValue"
 import jsonValue from "./jsonValue"
 
 let count = 0
-let counter = ()=>++count
+let counter = ()=>++count // FIXME: this is only for debugging
 
 export default {
     name: "jsonObject",
     components: {jsonValue, jsonKeyValue},
     data: ()=>({
-        value: {},
-        valueKeys: [],
+        masterValue: [],
         count: counter()
     }),
     props: {
     },
     computed: {
-    },
-    mounted() {
-        this.this = this
+        value() {
+            let object = {}
+            for (const each of this.masterValue) {
+                object[each.key] = each.value
+            }
+            return object
+        }
     },
     watch: {
-        // anytime the value changes
-        value: {
+        masterValue: {
             deep: true,
-            handler(newValue) {
-                // update the valueKeys
-                // "shouldn't this be a computed method?" 
-                // yeah go ahead and try that and see how it works out
-                this.valueKeys = Object.keys(newValue)
+            immediate: true,
+            handler() {
+                if (this.$listeners.changeValue instanceof Function) {
+                    this.$listeners.changeValue(this.value)
+                }
             }
         }
     },
     methods: {
         addKeyValue() {
-            let keys = Object.keys(this.value)
-            if (keys.length == 0) {
-                this.$set(this.value, "ReNameMe1", null)
+            if (this.masterValue.length == 0) {
+                this.$set(this.masterValue, 0, { key: "untitled-1", value: null })
             } else {
-                let prevName = keys[0]
-                this.$set(this.value, prevName+"-copy", null)
+                let lastElement = this.masterValue[this.masterValue.length-1]
+                this.masterValue = [...this.masterValue, {key: lastElement.key+"-copy", value: null } ]
             }
             // TODO: focus on the name of the newly created element
         },
         updateKeyValue(oldKey, key, value) {
-            if (oldKey != key) {
-                delete this.value[oldKey]
-            }
-            this.value[key] = value
             console.log(`OBJECT ${this.count}: updateKeyValue`)
             console.log(`    value:`, JSON.stringify(this.value))
             console.log(`    root:`,this.$attrs.root)
-            // tell any parents the value has updated
-            if (this.$listeners.changeValue instanceof Function) {
-                this.$listeners.changeValue(this.value)
+            for (const eachIndex in this.masterValue) {
+                let eachPair = this.masterValue[eachIndex]
+                // TODO: raise an error when two pairs have the same key
+                if (eachPair.key == oldKey) {
+                    this.$set(this.masterValue, eachIndex, { key: key, value: value })
+                }
             }
         },
         deleteKey(key) {
-            if (key in this.value) {
-                delete this.value[key]
+            for (const eachIndex in this.masterValue) {
+                let eachPair = this.masterValue[eachIndex]
+                if (eachPair.key == key) {
+                    this.$delete(this.masterValue, eachIndex)
+                }
             }
         },
     }
 }
 </script>
 <style lang="scss">
-[unique-fh3935] {
+[json-root-fni18943] [json-object-fh3935] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -85,15 +88,5 @@ export default {
     & > button {
         margin: 1rem;
     }
-}
-[unique-fh3935] * {
-    flex-wrap: nowrap; /* to disable bootstraps global CSS */
-    margin: 0; /* to disable bootstraps global CSS */
-}
-[unique-fh3935] .json-edit-bubble {
-    display: flex;
-    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
-    background: white;
-    border-radius: 1rem;
 }
 </style>

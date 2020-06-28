@@ -1,15 +1,15 @@
 <template>
-    <div unique-fni18943 class="json-editor-value-selector" >
+    <div json-value-container-fni18943>
         <!-- TODO: allow a restrictions argument -->
         
         <!-- Select type -->
-        <div unique-fni18943-type-picker class=json-type-picker>
+        <div json-value-container-fni18943-type-picker>
             <button @click="nextType" >←</button>
                 <span>{{type}}</span>
             <button @click="prevType" >→</button>
         </div>
         <!-- Edit Value -->
-        <div unique-fni18943-value class=json-editor-value>
+        <div json-value-container-fni18943-value>
             <template v-if="type == 'Null'">
                 <span style="font-weight: bold" >NULL</span>
             </template>
@@ -18,7 +18,7 @@
                     number
                     @input="validateNumber($event)"
                     @keydown="incrementListener($event)"
-                    @focus="selectInput($event)"
+                    @focus="$event.target.select()"
                     :value="numberValue"
                     >
             </template>
@@ -29,7 +29,7 @@
                 <div>FIXME</div>
             </template>
             <template v-if="type == 'Object'">
-                <jsonObject @changeValue="changeValue" :root="$attrs.root" />
+                <jsonObject @changeValue="informParent" :root="$attrs.root" />
             </template>
         </div>
     </div>
@@ -64,7 +64,7 @@ export default {
                 this.currentTypeIndex = typeOptions.length - 1
             }
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.changeValue(this.value), 0)
+            setTimeout(()=>this.informParent(this.value), 0)
             return typeOptions[this.currentTypeIndex]
         },
         value() {
@@ -81,14 +81,19 @@ export default {
     watch: {
         numberValue(newValue) {
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.changeValue(this.value), 0)
+            setTimeout(()=>this.informParent(this.value), 0)
         },
         stringValue(newValue) {
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.changeValue(this.value), 0)
+            setTimeout(()=>this.informParent(this.value), 0)
         },
     },
     methods: {
+        informParent(newValue) {
+            if (this.$listeners.changeValue instanceof Function) {
+                this.$listeners.changeValue(newValue)
+            }
+        },
         validateNumber($event) {
             let value = $event.target.value
             // enforce the input to always be a number
@@ -106,14 +111,6 @@ export default {
                 this.numberValue = --$event.target.value
             }
         },
-        selectInput($event) {
-            console.log(`$event is:`,$event)
-            $event.target.select()
-        },
-        changeValue(newValue) {
-            // in just a moment tell the parent the value just changed
-            this.$listeners.changeValue(newValue)
-        },
         nextType() {
             this.currentTypeIndex++
         },
@@ -125,10 +122,10 @@ export default {
 </script>
 
 <style lang="scss">
-[unique-fh3935] [unique-fni18943] {
+[json-root-fni18943] [json-value-container-fni18943] {
     margin: 0.4rem;
 }
-[unique-fni18943] {
+[json-value-container-fni18943] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -138,7 +135,7 @@ export default {
     background: #3130304a;
     align-items: flex-start;
 
-    & > [unique-fni18943-type-picker] {
+    & > [json-value-container-fni18943-type-picker] {
         margin: 0 0.1rem;
         padding: 0 0.5rem;
         display: flex;
@@ -163,7 +160,7 @@ export default {
         }
     }
     
-    & > [unique-fni18943-value] {
+    & > [json-value-container-fni18943-value] {
         min-height: 2.12rem;
         display: flex;
         align-items: center;
