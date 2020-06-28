@@ -29,7 +29,7 @@
                 <div>FIXME</div>
             </template>
             <template v-if="type == 'Object'">
-                <jsonObject @valueChange="valueChange" />
+                <jsonObject @changeValue="changeValue" :root="$attrs.root" />
             </template>
         </div>
     </div>
@@ -64,7 +64,7 @@ export default {
                 this.currentTypeIndex = typeOptions.length - 1
             }
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.valueChange(this.value), 0)
+            setTimeout(() => this.$listeners.changeValue(this.value), 0)
             return typeOptions[this.currentTypeIndex]
         },
         value() {
@@ -81,11 +81,11 @@ export default {
     watch: {
         numberValue(newValue) {
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.valueChange(this.value), 0)
+            setTimeout(() => this.$listeners.changeValue(this.value), 0)
         },
         stringValue(newValue) {
             // in just a moment tell the parent the value just changed
-            setTimeout(() => this.$listeners.valueChange(this.value), 0)
+            setTimeout(() => this.$listeners.changeValue(this.value), 0)
         },
     },
     methods: {
@@ -110,15 +110,15 @@ export default {
             console.log(`$event is:`,$event)
             $event.target.select()
         },
-        valueChange(newValue) {
+        changeValue(newValue) {
             // in just a moment tell the parent the value just changed
-            this.$listeners.valueChange(newValue)
+            this.$listeners.changeValue(newValue)
         },
         nextType() {
-            this.currentTypeIndex++;
+            this.currentTypeIndex++
         },
         prevType() {
-            this.currentTypeIndex--;
+            this.currentTypeIndex--
         },
     },
 }
