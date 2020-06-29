@@ -72,7 +72,7 @@ export default {
                     ++number
                     name += number
                 } else {
-                    name += "-copy"
+                    name += "-1"
                 }
                 this.masterValue.push({key: name, value: null }) 
             }
@@ -87,13 +87,11 @@ export default {
                     this.masterValue[eachIndex] = { key: key, value: value }
                 }
             }
+            this.attemptToInformParent()
             console.log(`OBJECT ${this.count}: updateKeyValue`)
             console.log(`    value:`, JSON.stringify(this.value))
-            this.attemptToInformParent()
         },
         deleteKey(key) {
-            console.log(`OBJECT ${this.count}: deleteKey`)
-            console.log(`    key is:`,key)
             for (const eachIndex in this.masterValue) {
                 let eachPair = this.masterValue[eachIndex]
                 if (eachPair.key == key) {
@@ -106,6 +104,8 @@ export default {
             this.masterValue = this.masterValue.filter(each=>each!==undefined)
             // invalidate all the value so it'll actually refresh
             this.attemptToInformParent()
+            console.log(`OBJECT ${this.count}: deleteKey`)
+            console.log(`    key is:`,key)
         },
     }
 }

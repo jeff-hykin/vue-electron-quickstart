@@ -65,17 +65,17 @@ export default {
         },
         onInput($event) {
             this.key = $event.target.value
+            this.attemptToInformParent()
             console.log(`KEY: changeKey`)
             console.log(`    $event is is:`, $event)
-            this.attemptToInformParent()
         },
         changeValue(newValue) {
-            console.log(`KEY: changeValue:`)
-            console.log(`    newValue is:`,newValue)
             // change the local value
             this.value = newValue
             // tell the parent object to update
             this.attemptToInformParent()
+            console.log(`KEY: changeValue:`)
+            console.log(`    newValue is:`,newValue)
         },
         deleteSelf() {
             // give a warning before deleting an object/list

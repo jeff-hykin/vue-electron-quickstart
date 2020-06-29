@@ -280,10 +280,10 @@ export default {
             this.attemptToInformParent()
         },
         updateListValue(newValue) {
-            console.log(`VALUE: List Update`)
-            console.log(`   newValue is:`,newValue)
             this.listValue = newValue
             this.attemptToInformParent()
+            console.log(`VALUE: List Update`)
+            console.log(`   newValue is:`,newValue)
         },
     },
 }

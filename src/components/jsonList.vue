@@ -65,19 +65,19 @@ export default {
         },
         elementValueChange(key, newElementValue) {
             this.value[key] = newElementValue
+            this.attemptToInformParent()
             console.log(`LIST ${this.count}: valueChange`)
             console.log(`    key is:`,key)
-            this.attemptToInformParent()
         },
         deleteElement(key) {
             delete this.value[key]
             delete this.uniqueKeysBecauseVueIsDumb[key]
             this.value                      = this.value.filter(each=>each!==undefined)
             this.uniqueKeysBecauseVueIsDumb = this.uniqueKeysBecauseVueIsDumb.filter(each=>each!==undefined)
+            this.attemptToInformParent()
             console.log(`LIST: deleteElement`)
             console.log(`    key is:`,key)
             console.log(`    this.value is:`,this.value)
-            this.attemptToInformParent()
         },
     }
 }

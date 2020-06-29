@@ -1,5 +1,5 @@
 <template>
-    <row class=wrapper align-h=left align-v=top>
+    <row class=wrapper align-h=left align-v=top overflow=auto>
         <!-- Settings Panel -->
         <settingsPanel>
             <!-- Labels -->
