@@ -1,12 +1,12 @@
 <template>
     <!-- just a wrapper aroung the first value -->
-    <div json-root-fni18943 override-fni18943>
+    <div json-root-fni18943 override-fni18943 @mouseleave="onMouseLeave">
         <jsonValue :initValue="$attrs.initValue" @changeValue="changeHandler" isRoot=true />
     </div>
 </template>
 
 <script>
-import jsonValue from "./jsonValue"
+import jsonValue, {clearAllOldActiveTabs} from "./jsonValue"
 
 export default {
     name: "jsonRoot",
@@ -23,6 +23,9 @@ export default {
             if (this.$listeners.changeValue instanceof Function) {
                 this.$listeners.changeValue(...args)
             }
+        },
+        onMouseLeave(eventObj) {
+            clearAllOldActiveTabs()
         }
     }
 }

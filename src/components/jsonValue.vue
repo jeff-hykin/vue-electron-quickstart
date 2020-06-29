@@ -63,10 +63,11 @@
 
 <script>
 
-let eventBucketKey = Symbol("jsonValueTabClearer")
-let activeHandlersKey = Symbol("jsonActiveValueMessenger")
-window[eventBucketKey] = []
-window[activeHandlersKey] = ()=>{}
+let globalActiveHandlers = {}
+let allActiveTabs = []
+export let clearAllOldActiveTabs = ()=>{
+    allActiveTabs.forEach(each=>each())
+}
 export default {
     name: "jsonValue",
     components: {
@@ -176,25 +177,23 @@ export default {
         onHover(eventObj) {
             // prevent the outside-most parent from always activating first
             eventObj.stopPropagation()
-            // console.log(`VALUE onHover`)
-            // console.log(`    this.value is:`,this.value)
             // remove the tab status from all the other jsonValues
             this.isActivating = true
-            window[eventBucketKey].forEach(each=>each())
+            clearAllOldActiveTabs()
             this.isActive = true
             this.isActivating = false
             // have all the listeners get forwarded to the active one
-            window[activeHandlersKey] = this.activeHandlers
+            globalActiveHandlers = this.activeHandlers
             // attach a callback for deactivation
-            window[eventBucketKey].push(()=>{this.isActive = false})
+            allActiveTabs.push(()=>{this.isActive = false})
         },
         checkTypeSelector(eventObj) {
             // just forward it to whichever one is active
-            window[activeHandlersKey].checkTypeSelector(eventObj)
+            globalActiveHandlers.checkTypeSelector(eventObj)
         },
         tryingToType(eventObj) {
             // just forward it to whichever one is active
-            window[activeHandlersKey].tryingToType(eventObj)
+            globalActiveHandlers.tryingToType(eventObj)
         },
         // call parents to deal with delete
         onDelete() {
