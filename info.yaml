@@ -3,6 +3,19 @@
     name: vue-electron-quickstart
     description: A hackable electron app
     
+    todo:
+        - improve the add button
+        - test the cascade of values
+        - have only one type-switcher tab be open
+        - have onBlur of root turn off all active values
+        - fix the delete button hover
+        - Have focus change the active element
+        - fix bug of hovering over nothing
+        - add shift arrow to always change the type
+        - add down arrow to create new element with same type
+        - why is list hover causing a value update
+        - somehow list values aren't propogating up all the way
+    
     (commands):
         dev: npm run dev
         package: npm run build

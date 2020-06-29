@@ -1,10 +1,13 @@
 <template>
-    <div json-object-fh3935 object-fh3935 :style="{...$attrs.style}" v-on="$listeners">
+    <div json-object-fh3935 object-fh3935>
         <!-- TODO: stop using the this.valueKeys (optimize it out) -->
         <template v-for="(each, index) in this.masterValue">
             <jsonKeyValue :initKey="each.key" :initValue="each.value" v-bind:key="index"  @changeValue="updateKeyValue" @delete="deleteKey" />
         </template>
-        <button @click="addKeyValue">
+        <button
+            @click="addKeyValue"
+            tabindex=1
+            >
             Add
         </button>
     </div>
@@ -23,6 +26,8 @@ export default {
     },
     data: ()=>({
         masterValue: [],
+        value: {},
+        previousValueAsString: "{}",
         count: counter()
     }),
     mounted() {
@@ -30,36 +35,48 @@ export default {
         // init the masterValue
         for (const key in this.$attrs.initValue) {
             this.masterValue.push({key, value: this.$attrs.initValue[key]})
-        }  
+        }
+        this.attemptToInformParent()
     },
-    computed: {
-        value() {
+    methods: {
+        updateValue() {
             let object = {}
             for (const each of this.masterValue) {
                 object[each.key] = each.value
             }
-            return object
-        }
-    },
-    watch: {
-        masterValue: {
-            deep: true,
-            immediate: true,
-            handler() {
+            this.value = object
+        },
+        attemptToInformParent() {
+            this.updateValue()
+            let newValue = this.value
+            let newValueAsString = JSON.stringify(newValue)
+            // if there is a legitimate change
+            if (this.previousValueAsString != newValueAsString) {
+                this.previousValueAsString = newValueAsString
+                // and there is a listener
                 if (this.$listeners.changeValue instanceof Function) {
-                    this.$listeners.changeValue(this.value)
+                    // then send them the newValue
+                    this.$listeners.changeValue(newValue)
                 }
             }
-        }
-    },
-    methods: {
+        },
         addKeyValue() {
             if (this.masterValue.length == 0) {
-                this.$set(this.masterValue, 0, { key: "untitled-1", value: null })
+                this.masterValue.push({ key: "untitled-1", value: null }) 
             } else {
                 let lastElement = this.masterValue[this.masterValue.length-1]
-                this.masterValue = [...this.masterValue, {key: lastElement.key+"-copy", value: null } ]
+                let number = lastElement.key.replace(/.+?(\d+)/,"$1")
+                let name = lastElement.key.replace(/(.+?)\d+/, "$1")
+                // FIXME: this needs to be done in a while loop
+                if (number-0==number-0) {
+                    ++number
+                    name += number
+                } else {
+                    name += "-copy"
+                }
+                this.masterValue.push({key: name, value: null }) 
             }
+            this.attemptToInformParent()
             // TODO: focus on the name of the newly created element
         },
         updateKeyValue(oldKey, key, value) {
@@ -67,19 +84,28 @@ export default {
                 let eachPair = this.masterValue[eachIndex]
                 // TODO: raise an error when two pairs have the same key
                 if (eachPair.key == oldKey) {
-                    this.$set(this.masterValue, eachIndex, { key: key, value: value })
+                    this.masterValue[eachIndex] = { key: key, value: value }
                 }
             }
             console.log(`OBJECT ${this.count}: updateKeyValue`)
             console.log(`    value:`, JSON.stringify(this.value))
+            this.attemptToInformParent()
         },
         deleteKey(key) {
+            console.log(`OBJECT ${this.count}: deleteKey`)
+            console.log(`    key is:`,key)
             for (const eachIndex in this.masterValue) {
                 let eachPair = this.masterValue[eachIndex]
                 if (eachPair.key == key) {
-                    this.$delete(this.masterValue, eachIndex)
+                    console.log(`    eachPair.key is:`,eachPair.key)
+                    console.log(`    key is:`,key)
+                    console.log(`    eachIndex is:`,eachIndex)
+                    delete this.masterValue[eachIndex]
                 }
             }
+            this.masterValue = this.masterValue.filter(each=>each!==undefined)
+            // invalidate all the value so it'll actually refresh
+            this.attemptToInformParent()
         },
     }
 }

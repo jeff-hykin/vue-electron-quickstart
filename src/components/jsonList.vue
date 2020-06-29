@@ -1,17 +1,14 @@
 <template>
-    <div json-list-fh3935 :style="{...$attrs.style}" v-on="$listeners">
+    <div json-list-fh3935>
         <!-- List everything -->
-        <template v-for="(eachElement, index) in this.value">
-            <div list-value-container-282345u44 v-bind:key="index">
-                <!-- TODO: use the index to allow tabbing through -->
-                <jsonValue @changeValue="elementValueChange(index)" :initValue="eachElement" />
-                <!-- TODO: let focus on button show the button -->
-                <button delete-button-285hg2u44 @click="deleteElement(index)">
-                    X
-                </button>
-            </div>
+        <template v-for="(each, index) in this.value">
+            <!-- TODO: use the index to allow tabbing through -->
+            <jsonValue v-bind:key="uniqueKeysBecauseVueIsDumb[index]" @changeValue="elementValueChange(index, $event)" @delete="deleteElement(index, $event)" :initValue="each" />
         </template>
-        <button @click="addElement">
+        <button
+            @click="addElement"
+            tabindex=1
+            >
             Add
         </button>
     </div>
@@ -27,39 +24,60 @@ export default {
     },
     data: ()=>({
         value: [],
-        count: counter()
+        uniqueKeysBecauseVueIsDumb: [],
+        previousValueAsString: "[]",
+        count: counter(),
+        randomIndexes: [],
     }),
     mounted() {
         console.log(`LIST ${count}: mounted`)
         this.value = this.$attrs.initValue || []
-    },
-    watch: {
-        value: {
-            deep: true,
-            immediate: true,
-            handler() {
-                // if (this.$listeners.changeValue instanceof Function) {
-                //     this.$listeners.changeValue(this.value)
-                // }
-            }
-        }
+        this.attemptToInformParent()
     },
     methods: {
-        addElement() {
-            // append an item
-            this.$set(this.value, this.value.length, null)
-            // TODO: focus on the name of the newly created element
-        },
-        elementValueChange(key) {
-            return (newElementValue) => {
-                this.$set(this.value, key, newElementValue)
-                // this.$set(this.value, key, value)
-                console.log(`LIST ${this.count}: valueChange`)
-                console.log(`    value:`, JSON.stringify(this.value))
+        attemptToInformParent() {
+            let newValue = this.value
+            let newValueAsString = JSON.stringify(newValue)
+            // if there is a legitimate change
+            if (this.previousValueAsString != newValueAsString) {
+                this.previousValueAsString = newValueAsString
+                // update the indexes when something actually changes
+                this.value = [...this.value]
+                // ensure that every index has a unique key
+                for (let eachIndex in this.value) {
+                    if (!this.uniqueKeysBecauseVueIsDumb[eachIndex]) {
+                        this.uniqueKeysBecauseVueIsDumb[eachIndex] = Math.random()
+                    }
+                }
+                // and there is a listener
+                if (this.$listeners.changeValue instanceof Function) {
+                    // then send them the newValue
+                    this.$listeners.changeValue(newValue)
+                }
             }
         },
+        addElement() {
+            // append an item
+            this.value.push(null)
+            this.uniqueKeysBecauseVueIsDumb.push(Math.random())
+            this.attemptToInformParent()
+            // TODO: focus on the name of the newly created element
+        },
+        elementValueChange(key, newElementValue) {
+            this.value[key] = newElementValue
+            console.log(`LIST ${this.count}: valueChange`)
+            console.log(`    key is:`,key)
+            this.attemptToInformParent()
+        },
         deleteElement(key) {
-            this.$delete(this.value, key)
+            delete this.value[key]
+            delete this.uniqueKeysBecauseVueIsDumb[key]
+            this.value                      = this.value.filter(each=>each!==undefined)
+            this.uniqueKeysBecauseVueIsDumb = this.uniqueKeysBecauseVueIsDumb.filter(each=>each!==undefined)
+            console.log(`LIST: deleteElement`)
+            console.log(`    key is:`,key)
+            console.log(`    this.value is:`,this.value)
+            this.attemptToInformParent()
         },
     }
 }

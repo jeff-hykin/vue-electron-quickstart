@@ -18,6 +18,7 @@ export default {
     },
     methods: {
         changeHandler(...args) {
+            console.log(`ROOT is:`,args)
             if (this.$listeners.changeValue instanceof Function) {
                 this.$listeners.changeValue(...args)
             }
