@@ -1,5 +1,5 @@
 <template>
-    <div invisible-wrapper-285hg2u44 tabindex=1 @keydown="checkTypeSelector" @keypress="tryingToType" @mouseover="onHover">
+    <div invisible-wrapper-285hg2u44 tabindex=1 @keydown="checkTypeSelector" @keypress="tryingToType" @mouseover="onHover" :isActive="isActive || isActivating">
         <!-- Select type -->
         <div type-picker-wrapper-fni18943 :isActive="isActive || isActivating">
             <div type-picker-fni18943>
@@ -389,6 +389,10 @@ export default {
             &[isKeyed] {
                 background: whitesmoke;
                 
+                &[type="Object"] [json-value-container-fni18943][type="Object"], &[type="List"] [json-value-container-fni18943][type="List"], {
+                    padding-top: 0rem;
+                }
+                
                 & > input {
                     background: transparent;
                 }
@@ -419,7 +423,7 @@ export default {
                     padding-top: calc(var(--type-picker-height) - var(--item-spacing)); // bigger than the type-selector popup
                     padding-right: 0.3rem; // fix pixel bug
                     padding-left: 0.3rem;
-                    padding-bottom: 0.5rem;
+                    padding-bottom: 0rem;
                     box-shadow: inset 3.5px 7.5px 18px -13px rgba(71, 71, 71, 0.82);
                     background: #e8e6e6;
                     // box-shadow: inset 8.5px 12.5px 18px -13px rgba(71,71,71,0.72);
@@ -472,7 +476,7 @@ export default {
         }
         
         // hovered
-        &:hover {
+        &[isActive] {
             & > [delete-button-285hg2u44] {
                 opacity: 1;
                 transform: translate(-45%, -45%) scale(1);
@@ -480,6 +484,7 @@ export default {
         }
         
         [delete-button-285hg2u44] {
+            
             // positioning
             position: absolute;
             top: 0;

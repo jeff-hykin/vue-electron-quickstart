@@ -5,10 +5,11 @@
             <jsonKeyValue :initKey="each.key" :initValue="each.value" v-bind:key="index"  @changeValue="updateKeyValue" @delete="deleteKey" />
         </template>
         <button
+            add-button-fh3935
             @click="addKeyValue"
             tabindex=1
             >
-            Add
+            +
         </button>
     </div>
 </template>
@@ -116,9 +117,5 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 0.1rem 0.3rem;
-    
-    & > button {
-        margin: 1rem;
-    }
 }
 </style>

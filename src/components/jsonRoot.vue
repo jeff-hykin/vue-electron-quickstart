@@ -46,4 +46,24 @@ export default {
     margin: 1rem;
     margin-top: 2rem;
 }
+[add-button-fh3935] {
+    --add-color: #81c784; 
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 0.85rem;
+    border-radius: 3rem;
+    height: 0.96em;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-size: 2em;
+    padding-top: 0;
+    border-width: medium;
+    transform: scale(0.7);
+    color: var(--add-color);
+    border-color: var(--add-color);
+}
 </style>

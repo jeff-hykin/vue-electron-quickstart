@@ -4,17 +4,32 @@
     description: A hackable electron app
     
     todo:
+        - add a fix for duplicate keys
         - improve the add button
-        - test the cascade of values
-        - have only one type-switcher tab be open
-        - have onBlur of root turn off all active values
-        - fix the delete button hover
+        - animate the add button
         - Have focus change the active element
-        - fix bug of hovering over nothing
         - add shift arrow to always change the type
         - add down arrow to create new element with same type
-        - why is list hover causing a value update
-        - somehow list values aren't propogating up all the way
+        - change Object to "Named List"
+        - change tabs to be hover-buttons:
+            - expand their hidden background
+            - enable their hidden background the cursor hover but nothing else
+            - shrink the null value
+        - publish it as a package:
+            - refactor the styles
+            - move to the other bundler
+            - figure out how dynamic imports work there
+            - add CSS classes
+            - maybe have to convert the scss to CSS
+            - add readme documentation
+    
+    version 2.0:
+        - add restictions:
+            - pass keys down along the chain
+            - have a root value that is the checker
+            - use the following format: [ [key,list,of,things], functionThatReturnsTrueIfValid ]
+        - allow swapping out the button components
+            
     
     (commands):
         dev: npm run dev

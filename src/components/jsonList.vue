@@ -6,10 +6,11 @@
             <jsonValue v-bind:key="uniqueKeysBecauseVueIsDumb[index]" @changeValue="elementValueChange(index, $event)" @delete="deleteElement(index, $event)" :initValue="each" />
         </template>
         <button
+            add-button-fh3935
             @click="addElement"
             tabindex=1
             >
-            Add
+            +
         </button>
     </div>
 </template>
@@ -89,8 +90,25 @@ export default {
     align-items: center;
     margin: 0.1rem 0.3rem;
     
+    --add-color: #81c784; 
     & > button {
-        margin: 1rem;
+        margin: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 0.85rem;
+        border-radius: 3rem;
+        height: 0.96em;
+        box-sizing: content-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        font-size: 2em;
+        padding-top: 0;
+        border-width: medium;
+        transform: scale(0.7);
+        color: var(--add-color);
+        border-color: var(--add-color);
     }
 }
 </style>
