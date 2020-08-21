@@ -41,6 +41,7 @@ export default {
 [json-root-fni18943] {
     --old-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
     --shadow: 3.5px 7.5px 18px -13px rgba(71, 71, 71, 0.82);
+    --tub-shadow: inset 3.5px 7.5px 18px -13px rgba(71, 71, 71, 0.82);
 }
 [json-root-fni18943][override-fni18943] {
     margin: 1rem;

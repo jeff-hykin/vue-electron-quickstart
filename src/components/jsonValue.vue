@@ -1,10 +1,10 @@
 <template>
     <div invisible-wrapper-285hg2u44 tabindex=1 @keydown="checkTypeSelector" @keypress="tryingToType" @mouseover="onHover" :isActive="isActive || isActivating">
         <!-- Select type -->
-        <div type-picker-wrapper-fni18943 :isActive="isActive || isActivating">
+        <div type-picker-wrapper-fni18943 :isActive="isActive || isActivating" :isKeyed="$attrs.isKeyed">
             <div type-picker-fni18943>
                 <button @click="nextType" >←</button>
-                    <span>{{type}}</span>
+                    <span>{{displayType()}}</span>
                 <button @click="prevType" >→</button>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <!-- Edit Value -->
             <div json-value-container-fni18943 :type="type">
                 <template v-if="type == 'Null'">
-                    <div style="font-weight: bold" >NULL</div>
+                    <div style="font-weight: bold" >N/A</div>
                 </template>
                 <template v-if="type == 'Number'">
                     <input
@@ -173,7 +173,18 @@ export default {
         
     },
     methods: {
-        
+        displayType() {
+            switch (this.type) {
+                case "Object":
+                    return "Named List"
+                case "Null":
+                    return "N/A"
+                case "String":
+                    return "Text"
+                default:
+                    return this.type
+            }
+        },
         onHover(eventObj) {
             // prevent the outside-most parent from always activating first
             eventObj.stopPropagation()
@@ -304,7 +315,12 @@ export default {
         [type-picker-wrapper-fni18943] {
             position: absolute;
             top: 0;
-            left: 1.5rem;
+            --offset: 1.5rem;
+            left: var(--offset);
+            &[isKeyed] {
+                left: calc(10rem + var(--offset));
+            }
+            
             height: fit-content;
             width: fit-content;
             transform: translate(0, -100%);
@@ -327,6 +343,7 @@ export default {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                justify-content: space-between;
                 background: gray;
                 color: whitesmoke;
                 --border-radius: 1rem;
@@ -338,7 +355,7 @@ export default {
                 
                 
                 & > span {
-                    min-width: 4rem; // width of the largest option (e.g. "Number")
+                    min-width: 5.5rem; // width of the largest option (e.g. "Named List")
                     text-align: center;
                 }
                 
@@ -363,17 +380,16 @@ export default {
         [value-bubble-285hg2u44] {
             display: flex;
             flex-direction: row;
-            // padding: 0.05rem 1.2rem;
-            // margin-top: 0.5rem;
             position: relative;
             box-shadow: var(--shadow);
             background: white;
             border-radius: 1rem;
+            min-width: 3rem;
             margin-top: var(--item-spacing);
-            min-width: var(--min-bubble-width);
             min-height: var(--min-bubble-height);
             justify-content: center; /* vertical */ 
             align-items: center;
+            
             
             // the key
             & > input {
@@ -387,52 +403,58 @@ export default {
             }
             
             &[isKeyed] {
-                background: whitesmoke;
+                background: transparent;
+                box-shadow: none;
                 
-                &[type="Object"] [json-value-container-fni18943][type="Object"], &[type="List"] [json-value-container-fni18943][type="List"], {
-                    padding-top: 0rem;
-                }
+                // &[type="Object"] [json-value-container-fni18943][type="Object"], &[type="List"] [json-value-container-fni18943][type="List"], {
+                //     padding-top: 0rem;
+                // }
                 
+                // the key
                 & > input {
-                    background: transparent;
+                    margin: 0 1rem;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    padding: 0.2rem;
+                    height: 1.2em;
+                    width: var(--min-input-width);
                 }
                 
-                &[type="Object"], &[type="List"] {
-                    & > input {
-                        background: white;
-                        border-radius: 1rem;
-                        padding: 0.3em 0.8em;
-                        box-sizing: content-box;
-                        align-self: flex-start;
-                        margin-top: 2rem;
-                    }
-                }
-            }
-            
-            &[type="Null"] {
-                background: whitesmoke;
+                // &[type="Object"], &[type="List"] {
+                //     & > input {
+                //         background: white;
+                //         border-radius: 1rem;
+                //         padding: 0.3em 0.8em;
+                //         box-sizing: content-box;
+                //         align-self: flex-start;
+                //         margin-top: 2rem;
+                //     }
+                // }
             }
             
             [json-value-container-fni18943]  {
-                &[type="Object"], &[type="List"] {
+                margin-top: -1px;
+                --primitive-value-width: 10rem;
+                --primitive-value-padding: 1.5rem;
+                
+                &[type="List"], &[type="Object"] {
+                    min-width: calc(calc(var(--min-input-width) + var(--primitive-value-padding)) + var(--primitive-value-padding));
+                    align-items: center;
+                    text-align: center;
+                    
                     // fill the area
                     flex-grow: 1;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     padding-top: calc(var(--type-picker-height) - var(--item-spacing)); // bigger than the type-selector popup
+                    border: 1px solid lightgrey;
                     padding-right: 0.3rem; // fix pixel bug
                     padding-left: 0.3rem;
                     padding-bottom: 0rem;
-                    box-shadow: inset 3.5px 7.5px 18px -13px rgba(71, 71, 71, 0.82);
-                    background: #e8e6e6;
-                    // box-shadow: inset 8.5px 12.5px 18px -13px rgba(71,71,71,0.72);
-                    // background: #f5f5f5;
                     border-radius: 1rem;
-                    // background: var(--light-gray);
                     align-items: flex-start;
-                    margin: 0.4rem;
-                    margin-right: calc(0.4rem + 0.4px); // fix pixel bug
                 }
                 
                 &[type="String"] {
@@ -445,26 +467,27 @@ export default {
                     align-items: center;
                     & > input {
                         text-align: right;
-                        width: var(--min-input-width); // prefer to stay small
+                        width: var(--primitive-value-width);
                     }
                 }
                 
                 &[type="Null"] {
-                    color: gray;
                     & > div {
                         font-weight: bold;
-                        width: fit-content;
-                        padding: 0.39em 1em;
+                        width: var(--primitive-value-width);
+                        box-sizing: content-box;
+                        padding: 0.39em var(--primitive-value-padding);
                         border-radius: 1rem;
-                        background: white;
-                        border: 1px solid lightgrey;
+                        border: 1px solid darkgray;
+                        background: lightgray;
+                        color: white;
                     }
                 }
                 
                 & > input {
                     min-height: var(--min-bubble-height);
-                    padding: 0 1.5rem; // because of the delete button overlap
-                    min-width: var(--min-input-width);
+                    padding: 0 var(--primitive-value-padding); // because of the delete button overlap
+                    width: var(--primitive-value-width) !important;
                     flex-grow: 1;
                     margin: 0;
                     border-radius: 1rem;
